@@ -1,5 +1,6 @@
 import telebot
 from telebot import types
+import time
 
 API_TOKEN = '7424864995:AAHx18ywhNXrDHZvLIlRi4seUTV5uD3xXBc'
 ADMIN_ID = 6803990183

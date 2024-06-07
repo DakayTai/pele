@@ -14,14 +14,7 @@ def send_message_copy(chat_id, message):
     if message.content_type == 'text':
         bot.send_message(chat_id, message.text)
     elif message.content_type == 'photo':
-        # Mengirim semua foto dalam satu pesan
-        media = []
-        for index, photo in enumerate(message.photo):
-            if index == 0 and message.caption:
-                media.append(types.InputMediaPhoto(photo.file_id, caption=message.caption))
-            else:
-                media.append(types.InputMediaPhoto(photo.file_id))
-        bot.send_media_group(chat_id, media)
+        bot.send_photo(chat_id, message.photo[-1].file_id, caption=message.caption)
     elif message.content_type == 'video':
         bot.send_video(chat_id, message.video.file_id, caption=message.caption)
     elif message.content_type == 'document':
@@ -60,7 +53,6 @@ def share_message(message):
         except Exception as e:
             bot.reply_to(message, f"An error occurred: {e}")
     else:
-        bot.reply_to(message, "Lo Anjing Bangsat")
 
 @bot.message_handler(commands=['reason'])
 def send_reason(message):
@@ -69,7 +61,7 @@ def send_reason(message):
         bot.send_message(ADMIN_ID, f"Reason from {message.from_user.username or message.from_user.first_name}: {message.text}")
         bot.reply_to(message, "Reason sent to admin.")
     else:
-        bot.reply_to(message, "Please reply to the message you want to send the reason for.")
+        bot.reply_to(message, "Reply Pesan For Reason Hanya Diperbolehkan 1 Foto")
 
 @bot.message_handler(commands=['uptime'])
 def uptime(message):

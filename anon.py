@@ -53,6 +53,7 @@ def share_message(message):
         except Exception as e:
             bot.reply_to(message, f"An error occurred: {e}")
     else:
+        bot.reply_to(message, "You are not authorized to use this command.")
 
 @bot.message_handler(commands=['reason'])
 def send_reason(message):
@@ -61,7 +62,7 @@ def send_reason(message):
         bot.send_message(ADMIN_ID, f"Reason from {message.from_user.username or message.from_user.first_name}: {message.text}")
         bot.reply_to(message, "Reason sent to admin.")
     else:
-        bot.reply_to(message, "Reply Pesan For Reason Hanya Diperbolehkan 1 Foto")
+        bot.reply_to(message, "Please reply to the message you want to send the reason for.")
 
 @bot.message_handler(commands=['uptime'])
 def uptime(message):

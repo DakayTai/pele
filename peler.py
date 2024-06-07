@@ -81,7 +81,8 @@ def join_group(message):
                 return
             group_link = parts[1]
             bot.send_message(message.chat.id, f"Joining group: {group_link}")
-            bot.join_chat(group_link)
+            invite_link = bot.export_chat_invite_link(group_link)
+            bot.reply_to(message, f"Invite link: {invite_link}")
         except Exception as e:
             bot.reply_to(message, f"An error occurred: {e}")
 

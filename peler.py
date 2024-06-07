@@ -52,23 +52,16 @@ def share_message(message):
                 bot.reply_to(message, "Please reply to the message you want to share.")
         except Exception as e:
             bot.reply_to(message, f"An error occurred: {e}")
-    else:
 
 @bot.message_handler(commands=['reason'])
 def send_reason(message):
-    if message.reply_to_message:
-        bot.forward_message(ADMIN_ID, message.chat.id, message.reply_to_message.message_id)
-        bot.send_message(ADMIN_ID, f"Reason from {message.from_user.username or message.from_user.first_name}: {message.text}")
-        bot.reply_to(message, "Reason sent to admin.")
-    else:
-        bot.reply_to(message, "Reply Pesan For Reason Allow Use Photo")
-
-@bot.message_handler(commands=['uptime'])
-def uptime(message):
-    current_time = time.time()
-    uptime_seconds = current_time - start_time
-    uptime_str = time.strftime("%H:%M:%S", time.gmtime(uptime_seconds))
-    bot.reply_to(message, f"Bot has been running for {uptime_str}")
+    if message.from_user.id == ADMIN_ID:
+        if message.reply_to_message:
+            bot.forward_message(ADMIN_ID, message.chat.id, message.reply_to_message.message_id)
+            bot.send_message(ADMIN_ID, f"Reason from {message.from_user.username or message.from_user.first_name}: {message.text}")
+            bot.reply_to(message, "Reason sent to admin.")
+        else:
+            bot.reply_to(message, "Please reply to the message you want to send the reason for.")
 
 @bot.message_handler(commands=['add'])
 def join_group(message):
@@ -83,6 +76,5 @@ def join_group(message):
             bot.join_chat(group_link)
         except Exception as e:
             bot.reply_to(message, f"An error occurred: {e}")
-    else:
 
 bot.polling()
